@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+python -c "import Crypto.SelfTest; Crypto.SelfTest.run()" \
+  2> >( egrep -v "RandomPool_DeprecationWarning|ClockRewindWarning" >&2 )

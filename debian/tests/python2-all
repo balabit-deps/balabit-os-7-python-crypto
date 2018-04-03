@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+PYVERS=$(pyversions -vi)
+PYVERS_DEFAULT=$(pyversions -vd)
+
+for py in $PYVERS ; do
+  if [ "$py" != "$PYVERS_DEFAULT" ] ; then
+    python$py -c "import Crypto.SelfTest; Crypto.SelfTest.run()" \
+      2> >( egrep -v "RandomPool_DeprecationWarning|ClockRewindWarning" >&2 )
+  fi
+done
